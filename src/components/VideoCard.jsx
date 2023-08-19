@@ -4,7 +4,6 @@ import { toast } from "sonner";
 export default function VideoCard({ videoInfo }) {
   const [loading, setLoading] = React.useState(false);
   const [currentPhraseIndex, setCurrentPhraseIndex] = React.useState(0);
-  const [isTabVisible, setIsTabVisible] = React.useState(true);
 
   const apiURL = "https://tubepirateapi-buuc-dev.fl0.io";
 
@@ -52,14 +51,12 @@ export default function VideoCard({ videoInfo }) {
         a.click();
         document.body.removeChild(a);
 
-        if (!isTabVisible) {
-          const img = videoInfo.thumbnail;
-          const text = `HEY! the video has been downloaded.`;
-          const notification = new Notification("TubePirate", {
-            body: text,
-            icon: img,
-          });
-        }
+        const img = videoInfo.thumbnail;
+        const text = `HEY! the video has been downloaded.`;
+        const notification = new Notification("TubePirate", {
+          body: text,
+          icon: img,
+        });
       } else {
         console.error("Error al descargar el archivo.");
       }
@@ -78,18 +75,6 @@ export default function VideoCard({ videoInfo }) {
       error: "Error",
     });
   };
-
-  React.useEffect(() => {
-    const handleVisibilityChange = () => {
-      setIsTabVisible(!document.hidden);
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
 
   return (
     <div className="bg-white rounded-sm shadow-xl lg:w-[900px] flex mt-5 md:mt-10 text-black">
