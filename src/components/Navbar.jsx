@@ -32,7 +32,7 @@ export default function Navbar() {
         </Link>
         <div className="flex gap-8 uppercase font-semibold">
           <Link
-            href="https://github.com/Orloxx23"
+            href="https://github.com/Orloxx23/TubePirate"
             className="text-white text-xl font-medium transition-all duration-300 ease-in-out"
             target="_blank"
           >
