@@ -1,5 +1,11 @@
 import ytdl from "ytdl-core";
 
+export const config = {
+  api: {
+    responseLimit: false,
+  },
+};
+
 export default async (req, res) => {
   if (req.method === "GET") {
     const { videoUrl } = req.query;
