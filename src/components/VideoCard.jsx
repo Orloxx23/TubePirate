@@ -4,6 +4,9 @@ import { toast } from "sonner";
 export default function VideoCard({ videoInfo }) {
   const [loading, setLoading] = React.useState(false);
   const [currentPhraseIndex, setCurrentPhraseIndex] = React.useState(0);
+  const [isTabVisible, setIsTabVisible] = React.useState(true);
+
+  const apiURL = "https://tubepirateapi-buuc-dev.fl0.io";
 
   const phrasesArray = [
     "Loading the visual treasure!",
@@ -35,17 +38,28 @@ export default function VideoCard({ videoInfo }) {
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/download?url=${videoInfo.url}`);
+      const response = await fetch(
+        `${apiURL}/api/download?url=${videoInfo.url}`
+      );
 
       if (response.ok) {
         const res = await response.json();
-
+        console.log(apiURL + res.downloadUrl);
         const a = document.createElement("a");
-        a.href = res.downloadUrl;
+        a.href = apiURL + res.downloadUrl;
         a.download = `${videoInfo.title}.mp4`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+
+        if (!isTabVisible) {
+          const img = videoInfo.thumbnail;
+          const text = `HEY! the video has been downloaded.`;
+          const notification = new Notification("TubePirate", {
+            body: text,
+            icon: img,
+          });
+        }
       } else {
         console.error("Error al descargar el archivo.");
       }
@@ -53,12 +67,6 @@ export default function VideoCard({ videoInfo }) {
       console.error("Error:", error);
     }
 
-    const img = videoInfo.thumbnail;
-    const text = `HEY! the video has been downloaded.`;
-    const notification = new Notification("TubePirate", {
-      body: text,
-      icon: img,
-    });
     setLoading(false);
   };
 
@@ -70,6 +78,18 @@ export default function VideoCard({ videoInfo }) {
       error: "Error",
     });
   };
+
+  React.useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsTabVisible(!document.hidden);
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <div className="bg-white rounded-sm shadow-xl lg:w-[900px] flex mt-5 md:mt-10 text-black">
