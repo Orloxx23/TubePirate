@@ -66,7 +66,45 @@ export default function DownloadSection() {
         </div>
       </form>
 
-      {videoInfo.title && <VideoCard videoInfo={videoInfo} />}
+      {videoInfo.title ? (
+        <VideoCard videoInfo={videoInfo} />
+      ) : (
+        <div className="max-w-sm p-6 mt-5 md:mt-10 rounded-lg shadow bg-gray-800 border-gray-700">
+          <p className="mb-2 text-2xl font-bold tracking-tight text-white">
+            Can't find a video?
+          </p>
+
+          <p className=" font-normal text-gray-400">
+            Give it a try with that video.
+          </p>
+          <p className="mb-3 text-gray-400">
+            <code>https://www.youtube.com/watch?v=Gwv0gWC8Sa4</code>
+          </p>
+          <button
+            onClick={() =>
+              setUrl("https://www.youtube.com/watch?v=Gwv0gWC8Sa4")
+            }
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#6c35de] rounded-lg focus:ring-4 focus:outline-none"
+          >
+            Try
+            <svg
+              className="w-3.5 h-3.5 ml-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
