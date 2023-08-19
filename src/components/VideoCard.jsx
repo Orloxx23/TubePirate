@@ -35,30 +35,24 @@ export default function VideoCard({ videoInfo }) {
   const handleDownload = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/download?url=${videoInfo.url}`);
+      const response = await fetch(
+        `/api/download?videoUrl=${encodeURIComponent(videoInfo.url)}`
+      );
+      const blob = await response.blob();
 
-      if (response.ok) {
-        const res = await response.json();
-
-        const a = document.createElement("a");
-        a.href = res.downloadUrl;
-        a.download = `${videoInfo.title}.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      } else {
-        console.error("Error al descargar el archivo.");
-      }
+      // Create a download link for the user
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = `${videoInfo.title}.mp4`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error:", error);
+      // Handle error if necessary
     }
-
-    const img = videoInfo.thumbnail;
-    const text = `HEY! the video has been downloaded.`;
-    const notification = new Notification("TubePirate", {
-      body: text,
-      icon: img,
-    });
     setLoading(false);
   };
 
