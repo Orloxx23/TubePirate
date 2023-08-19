@@ -1,5 +1,6 @@
 import React from "react";
 import VideoCard from "./VideoCard";
+import Alert from "./Alert";
 
 export default function DownloadSection() {
   const [url, setUrl] = React.useState("");
@@ -22,7 +23,10 @@ export default function DownloadSection() {
         const _videoInfo = {
           title: data.videoDetails.title,
           author: data.videoDetails.author.name,
-          thumbnail: data.videoDetails.thumbnails[data.videoDetails.thumbnails.length - 1].url,
+          thumbnail:
+            data.videoDetails.thumbnails[
+              data.videoDetails.thumbnails.length - 1
+            ].url,
           duration: data.videoDetails.lengthSeconds,
           url: data.videoDetails.video_url,
         };
@@ -36,8 +40,13 @@ export default function DownloadSection() {
 
   return (
     <div className="absolute top-0 left-0 w-full h-screen px-4 md:px-20 lg:px-40 pt-[15rem] lg:pt-[17rem] md:pt-[18rem] flex flex-col items-center text-white">
-      <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl brand">Youtube Downloader</h1>
-      <p className="text-white/60 text-sm md:text-base">a safe and easy Youtube video downloader</p>
+      <Alert />
+      <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl brand">
+        Youtube Downloader
+      </h1>
+      <p className="text-white/60 text-sm md:text-base">
+        a safe and easy Youtube video downloader
+      </p>
 
       <form onSubmit={handleSubmit}>
         <div className="bg-white overflow-hidden rounded-sm pl-4 lg:w-[900px] flex mt-8 md:mt-16">
