@@ -71,14 +71,14 @@ export default function DownloadSection() {
       ) : (
         <div className="max-w-sm p-6 mt-5 md:mt-10 rounded-lg shadow bg-gray-800 border-gray-700">
           <p className="mb-2 text-2xl font-bold tracking-tight text-white">
-            Can't find a video?
+            {"Can't find a video?"}
           </p>
 
           <p className=" font-normal text-gray-400">
-            Give it a try with that video.
+            {"Give it a try with that video."}
           </p>
           <p className="mb-3 text-gray-400">
-            <code>https://www.youtube.com/watch?v=Gwv0gWC8Sa4</code>
+            <code>{"https://www.youtube.com/watch?v=Gwv0gWC8Sa4"}</code>
           </p>
           <button
             onClick={() =>
